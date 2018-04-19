@@ -1,13 +1,12 @@
 <template>
     <div>
         <center>
-            <h3>Boards Page</h3>
-        
-            <v-layout row-sm column child-flex-sm>
+            <h3>Boards Page</h3><br>
+            <v-layout row-sm child-flex-sm>
                 <div v-for="board in boards">
                     <router-link :to="{path:'/boards',params:{id:board.id}}">
-                          <v-card dark class="primary ma-1" style="cursor:pointer" >
-                                <v-card-text>{{board.id}}</v-card-text>
+                          <v-card width="430" dark class="primary ma-1" style="cursor:pointer" >
+                                <v-card-text>{{board.name}}</v-card-text>
                           </v-card>
                     </router-link>
 
