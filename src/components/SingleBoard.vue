@@ -1,9 +1,9 @@
 <template>
     <div>
         <center>
-            <h3>Boards Page</h3><br>
+            <h3>Board</h3><br>
             <v-layout row-sm child-flex-sm>
-                
+                <h2>{{$route.params.id}}</h2>
             </v-layout>
         </center>
     </div>
