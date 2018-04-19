@@ -31,6 +31,11 @@ export default new Router({
       path: '/',
       name: 'Boards',
       component: Boards
+    },
+    {
+      path: '/boards/:id',
+      name: 'SingleBoard',
+      component: SingleBoard
     }
   ],
   mode: 'history'
