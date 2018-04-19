@@ -21,7 +21,10 @@
         },
 
         mounted() {
-            // let token = localStorage.getItem('token');
+            let token = localStorage.getItem('token');
+            if (!token) {
+                this.$router.push('/login')
+            };
             // axios.get('http://localhost:8000/boards?api_token=' + token)
             //     .then(response => {
             //         console.log(response);
