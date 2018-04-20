@@ -20,16 +20,14 @@
             }
         },
 
+        created (){
+            // this.fetchBoardsData();
+        },
         mounted() {
             let token = localStorage.getItem('token');
             if (!token) {
                 this.$router.push('/login')
             };
-            // axios.get('http://localhost:8000/boards?api_token=' + token)
-            //     .then(response => {
-            //         console.log(response);
-            //      this.boards = response.data.boards;
-            //     });
         }
 
     }
