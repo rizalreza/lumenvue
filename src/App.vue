@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import boardDataMixin from './mixins/boardDataMixin'
+
   export default {
     data() {
       return {
@@ -70,39 +72,32 @@
         this.loggedIn=false;
       }); 
 
-      if (token) {
-        this.loggedIn=true;
-        this.fetchUserData();
-        this.fetchBoardsData(); 
-      }
-
+      this.loggedIn=true;
+      this.fetchUserData();
+      this.fetchBoardsData(); 
        
     },
+
+    mixins:[boardDataMixin],
 
     methods: {
 
       fetchUserData() {
         axios.get(baseApiUrl+"users/"+token)
         .then((response) => {
-          console.log(response.data.user.username);
+          // console.log(response.data.user.username);
         this.user = response.data.user;  
         });
       },
 
-      fetchBoardsData() {
-        axios.get(baseApiUrl+'boards?api_token=' + token)
-        .then(response => {
-        this.boards = response.data.boards;
-      Event.$emit('boardsLoaded',this.boards);
-        });
-      },
+
 
       redirectGuestToLogin(){
         if (!token) {
         this.$router.push('/login');  
         }
       } 
-          
+
     }
 
   }

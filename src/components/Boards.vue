@@ -19,6 +19,8 @@
 
 <script>
 
+import boardDataMixin from '../mixins/boardDataMixin'
+
 	export default {
 
 		data() {
@@ -28,18 +30,12 @@
 		},
   
 		mounted() {
-			this.fetchBoardsData();
+		this.fetchBoardsData();
 		},
 
-		methods: {
-			fetchBoardsData() {
-				axios.get(baseApiUrl+'boards?api_token=' + token)
-				.then(response => {
-					console.log(response);
-				 this.boards = response.data.boards;
-				});
-			}
-		}
+		mixins: [boardDataMixin],
+
+
 
 	}
 
