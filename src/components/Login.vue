@@ -39,10 +39,11 @@
                 axios.post('http://localhost:8000/login/', this.login)
                     .then(response => {
                         let token = response.data.user.api_token;
-
-                        localStorage.setItem('token', token);
-
-                        Event.$emit('login');
+                        window.token=token;
+                        let user = response.data.user;
+                        localStorage.setItem('token',token);
+                        localStorage.setItem('user',JSON.stringify(user));
+                        Event.$emit('login',user);
 
                         this.$router.push('/');
                     });

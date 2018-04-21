@@ -6,6 +6,7 @@
           <v-btn flat>Login</v-btn>
         </router-link>
       </div>
+
       <v-menu offset-y v-if='loggedIn'>
         <v-btn primary flat slot="activator">
           <v-icon left>developer_board</v-icon>Boards
@@ -16,6 +17,7 @@
           </v-list-tile-title>
         </v-list>
       </v-menu>
+
       <v-spacer></v-spacer>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
@@ -50,7 +52,6 @@
 
 <script>
 import boardDataMixin from './mixins/boardDataMixin'
-
   export default {
     data() {
       return {
@@ -63,8 +64,9 @@ import boardDataMixin from './mixins/boardDataMixin'
     created() {
       this.redirectGuestToLogin();
 
-      Event.$on('login', ()=> {
+      Event.$on('login',($user)=>{
         this.loggedIn=true;
+        this.user=$user;
         this.fetchBoardsData();
       });
 
@@ -72,25 +74,16 @@ import boardDataMixin from './mixins/boardDataMixin'
         this.loggedIn=false;
       }); 
 
+    if(token){
+      this.user = JSON.parse(localStorage.getItem('user'));
       this.loggedIn=true;
-      this.fetchUserData();
       this.fetchBoardsData(); 
-       
+      }
     },
 
     mixins:[boardDataMixin],
 
     methods: {
-
-      fetchUserData() {
-        axios.get(baseApiUrl+"users/"+token)
-        .then((response) => {
-          // console.log(response.data.user.username);
-        this.user = response.data.user;  
-        });
-      },
-
-
 
       redirectGuestToLogin(){
         if (!token) {
