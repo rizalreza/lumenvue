@@ -40,8 +40,11 @@
             registerIt() {
                 axios.post('http://localhost:8000/register/',this.register)
                     .then(response => {
+                        console.log(response);
                         let token = response.data.user.api_token;
                         localStorage.setItem('token',token);
+
+                    this.$router.push('/');
                     });
             }
 

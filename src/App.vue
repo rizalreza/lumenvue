@@ -12,14 +12,14 @@
           <v-icon left>developer_board</v-icon>Boards
         </v-btn>
         <v-list v-for="board in boards" :key="board.id">
-          <v-list-tile-title>
+          <router-link :to ="{name:'SingleBoard',params:{id:board.id}}" tag='v-list-tile'>
             &nbsp; &nbsp; {{ board.name}}
-          </v-list-tile-title>
+          </router-link>
         </v-list>
       </v-menu>
 
       <v-spacer></v-spacer>
-      <v-toolbar-title v-text="title"></v-toolbar-title>
+    <v-toolbar-title> <router-link to="/" tag="span"><v-btn flat>{{title}}</v-btn></router-link></v-toolbar-title>
       <v-spacer></v-spacer>
       <div v-if='!loggedIn'>
         <router-link to="/register" tag="span">
@@ -61,6 +61,7 @@ import boardDataMixin from './mixins/boardDataMixin'
         loggedIn:false
       }
     },
+
     created() {
       this.redirectGuestToLogin();
 
@@ -74,11 +75,11 @@ import boardDataMixin from './mixins/boardDataMixin'
         this.loggedIn=false;
       }); 
 
-    if(token){
-      this.user = JSON.parse(localStorage.getItem('user'));
-      this.loggedIn=true;
-      this.fetchBoardsData(); 
-      }
+      if(token){
+        this.user = JSON.parse(localStorage.getItem('user'));
+        this.loggedIn=true;
+        this.fetchBoardsData(); 
+        }
     },
 
     mixins:[boardDataMixin],

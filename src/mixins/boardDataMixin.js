@@ -3,7 +3,7 @@ export default{
 	methods: {
 
 		fetchBoardsData() {
-      axios.get(baseApiUrl+'boards?api_token=' + token)
+      axios.get('boards')
         .then(response => {
         this.boards = response.data.boards; 
         });
