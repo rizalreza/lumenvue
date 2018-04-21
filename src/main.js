@@ -11,6 +11,11 @@ window.axios = axios;
 Vue.use(Vuetify);
 Vue.config.productionTip = false;
 
+window.Event = new Vue;
+window.token = localStorage.getItem('token');
+window.baseApiUrl = "http://localhost:8000/";
+
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

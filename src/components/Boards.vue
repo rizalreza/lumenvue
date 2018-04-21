@@ -1,44 +1,42 @@
 <template>
-    <div>
-        <center>
-            <h3>Boards Page</h3><br>
-        <v-layout row-sm child-flex-sm>
-                <div v-for="board in boards" :key='board.id'>
-                    <router-link :to="{name:'SingleBoard',params:{id:board.id}}">
-                          <v-card dark class="primary ma-1" style="cursor:pointer" >
-                                <v-card-text>{{board.name}}</v-card-text>
-                          </v-card>
-                    </router-link>
+	<div>
+		<center>
+			<h3>Boards Page</h3><br>
+		<v-layout row-sm child-flex-sm>
+				<div v-for="board in boards" :key='board.id'>
+					<router-link :to="{name:'SingleBoard',params:{id:board.id}}">
+						  <v-card dark class="primary ma-1" style="cursor:pointer" >
+								<v-card-text>{{board.name}}</v-card-text>
+						  </v-card>
+					</router-link>
 
-                </div>
-            </v-layout>
-        </center>
-    </div>
+				</div>
+			</v-layout>
+		</center>
+	</div>
 
 </template>
 
 <script>
 
-    export default {
+import boardDataMixin from '../mixins/boardDataMixin'
 
-        data() {
-            return {
-                boards: ''
-            } 
-        },
+	export default {
 
-        mounted() {
-            let token = localStorage.getItem('token');
-            if (!token) {
-                this.$router.push('/login')
-            };
-            axios.get('http://localhost:8000/boards?api_token=' + token)
-                .then(response => {
-                    console.log(response);
-                 this.boards = response.data.boards;
-                });
-        }
+		data() {
+			return {
+				boards: ''
+			} 
+		},
+  
+		mounted() {
+		this.fetchBoardsData();
+		},
 
-    }
+		mixins: [boardDataMixin],
+
+
+
+	}
 
 </script>
