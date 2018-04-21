@@ -11,7 +11,7 @@
 			</v-list-tile>
 
 			<v-list-tile>
-				<a href="#">Add link</a>
+				<a href="#">Add Card</a>
 			</v-list-tile>
 		</v-list>
 		
@@ -27,7 +27,7 @@
 			}
 		},
 		created(){
-			console.log(this.lists);
+			// console.log(this.lists);
 			this.cards=this.list.cards;
 		}
 	}
