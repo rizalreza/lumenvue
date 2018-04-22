@@ -1,8 +1,8 @@
 
 <template>
   
-<!--   <div @click="editMode=false; updateListId=null"> -->
-  <div> 
+  <div @click="editMode=false; updateList=null">
+
     <center><h2>{{board.name}}</h2></center><br>
 
       <v-container grid-list-md fluid> 
@@ -10,23 +10,34 @@
             <v-flex md3 v-for="list in lists" v-bind:key="list.id">
               <v-card  class="grey lighten-2">
                  <v-toolbar class="green white--text" dark dense>
-                    <v-toolbar-title>{{list.name}}</v-toolbar-title>
+                    <v-text-field v-model="listName" label="List name" v-if="updateListId==list.id" @keyup.enter="updateList"></v-text-field> 
+                    <v-toolbar-title @click.stop="updateListId=list.id" v-else>{{list.name}}</v-toolbar-title>
                         <v-spacer></v-spacer>
-                        <v-btn icon>
+                        
+                      <v-menu offset-y>
+                        <v-btn icon slot="activator">
                           <v-icon>more_vert</v-icon>
                         </v-btn>
+
+                        <v-list>
+                          <v-list-tile @click.stop="deleteList(list.id)">
+                            Delete
+                          </v-list-tile>
+                        </v-list>
+                      </v-menu>
+
                  </v-toolbar>
               <board-card :list="list"> </board-card>
 
 
-              </v-card>
+              </v-card> 
             </v-flex>
 
             <v-flex md3>
               <v-card>
                 <v-card-title class="white lighten-1">
-                  <v-text-field v-model="listName" label="List name" v-if="editMode" @keyup.enter="storeList"></v-text-field> 
-                    <v-btn flat small class="primary" @click="editMode=true" v-if="!editMode">Add list</v-btn>                  
+                  <v-text-field @click.stop v-model="listName" label="List name" v-if="editMode" @keyup.enter="storeList"></v-text-field> 
+                    <v-btn flat small class="primary" @click.stop="editMode=true" v-else>Add list</v-btn>                  
                 </v-card-title>
               </v-card>
             </v-flex>
@@ -50,7 +61,9 @@ import BoardCard from '@/components/BoardCard'
          cards:'',
          boardId:'',
          listName:'',
-         editMode:false
+         editMode:false,
+         updateListId:'',
+         deleteListId:''
         }
       },
 
@@ -88,7 +101,25 @@ import BoardCard from '@/components/BoardCard'
           this.lists.push(newList);
           this.listName="";
         });
-        // alert("Success");
+      },
+
+      updateList(){
+        axios.put("/boards/"+this.boardId+"/list/"+this.updateListId,{name:this.listName})
+        .then(response=> {
+          console.log(response);
+          this.updateListId = null;
+          this.listName="";
+          this.fetchBoardsData();
+
+        });
+      },
+
+      deleteList(listId){
+        axios.delete("/boards/"+this.boardId+"/list/"+listId)
+        .then(response=> {
+          console.log(response);
+          this.fetchBoardsData();
+        });
       },
 
       fetchBoardsData() {
