@@ -1,7 +1,7 @@
 
 <template>
   
-  <div @click="editMode=false; updateList=null">
+  <div @click="editMode=false">
 
     <center><h2>{{board.name}}</h2></center><br>
 
@@ -61,8 +61,8 @@ import BoardCard from '@/components/BoardCard'
          cards:'',
          boardId:'',
          listName:'',
-         editMode:false,
          updateListId:'',
+         editMode:false,
          deleteListId:''
         }
       },
@@ -102,11 +102,10 @@ import BoardCard from '@/components/BoardCard'
           this.listName="";
         });
       },
-
       updateList(){
         axios.put("/boards/"+this.boardId+"/list/"+this.updateListId,{name:this.listName})
         .then(response=> {
-          console.log(response);
+          // console.log(response);
           this.updateListId = null;
           this.listName="";
           this.fetchBoardsData();
