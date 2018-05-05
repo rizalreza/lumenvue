@@ -10,7 +10,7 @@
             <v-flex md3 v-for="list in lists" v-bind:key="list.id">
               <v-card  class="grey lighten-2">
                  <v-toolbar class="green white--text" dark dense>
-                    <v-text-field v-model="listName" label="List name" v-if="updateListId==list.id" @keyup.enter="updateList"></v-text-field> 
+                    <v-text-field v-model="listName" label="List name" v-if="updateListId==list.id" @keyup.enter="updateList" @keyup.esc="updateListId=null"></v-text-field> 
                     <v-toolbar-title @click.stop="updateListId=list.id" v-else>{{list.name}}</v-toolbar-title>
                         <v-spacer></v-spacer>
                         
@@ -105,7 +105,7 @@ import BoardCard from '@/components/BoardCard'
       updateList(){
         axios.put("/boards/"+this.boardId+"/list/"+this.updateListId,{name:this.listName})
         .then(response=> {
-          // console.log(response);
+          console.log(response);
           this.updateListId = null;
           this.listName="";
           this.fetchBoardsData();

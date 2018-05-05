@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<v-list class="grey lighten-3">
-			<draggable v-model="cards" :options="{group:'cards'}" @add="onAdd" style="min-height: 15px" :listId="list.id">
+			<draggable v-model="cards" :options="{group:'cards'}" @add="onAdd" style="min-height: 20px" :listId="list.id">
 				<li v-for="card in cards" :key="card.id" :cardId="card.id">
 					<v-list-tile >
 						<v-list-tile-content>
@@ -53,8 +53,8 @@ import draggable from 'vuedraggable'
 				});
 			},
 
-			updateCard(cardId){
-				axios.put('/card/'+cards,{lists_id:listId})
+			updateCard(cardId, listId){
+				axios.put('/card/'+cardId,{lists_id:listId})
 				.then(response=> {
 					console.log(response);
 				});
@@ -72,7 +72,12 @@ import draggable from 'vuedraggable'
 				let fromListId = evt.from.getAttribute('listId');
 				let cardId = evt.item.getAttribute('cardId');
 				let toListId = evt.to.getAttribute('listId');
-			}
+
+				this.updateCard(cardId, toListId);
+			},
+
+
+
 		}
 	}
 </script>
